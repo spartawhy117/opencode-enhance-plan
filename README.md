@@ -2,72 +2,99 @@
 
 ## English
 
-`opencode-plan-todo` is a lightweight workflow layer for OpenCode that adds a stronger planning experience without modifying the built-in CLI.
+`opencode-plan-todo` is a planning workflow layer for OpenCode.
 
-It introduces:
-- a dedicated primary agent: `plan-todo`
-- planning commands: `/init-plan`, `/plan-feature`, `/feature-switch`, `/plan-handoff`
-- project templates for persistent feature plans and minimal build handoff
+It does not replace the built-in `plan` mode. Instead, it adds a stronger planning mode for feature work that needs:
+- persistent feature artifacts
+- explicit review before execution
+- structured todo state
+- feature switching and resume support
+- minimal build handoff
 
-### Why this exists
+### Why not just use the built-in `plan` mode?
 
-Built-in planning modes are often good at analysis but weak at preserving feature-specific todo state, explicit review checkpoints, and lightweight execution handoff. This repository treats planning as a first-class workflow.
+The built-in `plan` mode is still useful for lightweight read-only analysis.
 
-### Design goals
+`plan-todo` is intended for heavier feature planning where the default planning experience is often too weak in practice.
 
-- keep the built-in `/init` and `plan` behaviors intact
-- add a stronger planning mode instead of patching built-in behavior
-- keep execution context small by handing build mode a focused `handoff.md`
-- store feature planning as durable artifacts instead of disposable chat state
-- default to Chinese in runtime conversation while keeping repository docs bilingual
+### Built-in `plan` vs `plan-todo`
 
-### Repository contents
+| Area | Built-in `plan` | `plan-todo` |
+| --- | --- | --- |
+| Primary use | quick analysis | feature planning workflow |
+| Todo persistence | limited | explicit, structured, feature-scoped |
+| Plan state model | implicit | `prepare -> ready -> approved -> building -> ...` |
+| Feature switching | not a core workflow | built in via `/feature-switch` |
+| Execution handoff | loose | focused `handoff.md` |
+| Plan artifacts | optional | required per feature |
+| Review gate | informal | explicit approval before handoff |
+
+### What this repository includes
 
 - `agents/` - custom agent definitions
 - `commands/` - custom slash commands
-- `templates/` - files used by `/init-plan`
+- `templates/` - project templates used by `/init-plan`
 - `docs/` - installation, usage, lifecycle, and upgrade notes
 - `scripts/install.ps1` - optional Windows install helper
 
-### Quick start
+### Core idea
 
-1. Copy `agents/`, `commands/`, and `templates/` into your OpenCode config directory, or run `scripts/install.ps1`.
+Use the built-in `plan` mode when you want lightweight investigation.
+
+Use `plan-todo` when you want a full planning loop with:
+- one active feature at a time
+- persistent plan artifacts under `plan/active/<feature>/`
+- explicit option comparison
+- explicit user confirmation before build
+- a small execution context through `handoff.md`
+
+### Start here
+
+- Installation: `docs/installation.md`
+- Usage: `docs/usage.md`
+- Feature lifecycle: `docs/feature-lifecycle.md`
+- Upgrade compatibility: `docs/upgrade-compatibility.md`
+
+### Quick path
+
+1. Install this workflow into your OpenCode config.
 2. Restart OpenCode.
 3. Switch to `plan-todo`.
 4. Run `/init-plan` inside a project.
-5. Run `/plan-feature <feature-name>` to start planning.
-6. Run `/plan-handoff` before switching to build mode.
-
-### Key workflow
-
-- Plan in `plan-todo`
-- Keep one active feature at a time
-- Persist plan artifacts under `plan/active/<feature>/`
-- Generate a concise `handoff.md`
-- Build from the handoff with minimal additional context
+5. Run `/plan-feature <feature-name>`.
+6. Review and approve the plan.
+7. Run `/plan-handoff` before switching to build mode.
 
 ## 中文
 
-`opencode-plan-todo` 是一个构建在 OpenCode 之上的轻量工作流层，用来增强规划体验，而不是修改 OpenCode 内置 CLI 行为。
+`opencode-plan-todo` 是一个构建在 OpenCode 之上的 planning workflow layer。
 
-它提供：
-- 一个专用主代理：`plan-todo`
-- 一组规划命令：`/init-plan`、`/plan-feature`、`/feature-switch`、`/plan-handoff`
-- 一套用于持久化 feature 计划和最小 build handoff 的项目模板
+它不是用来替代内置 `plan` 模式，而是新增一个更强的规划模式，专门处理这类 feature 任务：
+- 需要持久化 feature 工件
+- 需要执行前明确审阅
+- 需要结构化 todo 状态
+- 需要 feature 切换与恢复
+- 需要最小化 build handoff
 
-### 为什么要做这个仓库
+### 为什么不直接用内置 `plan`？
 
-内置 planning 模式通常擅长分析，但在 feature 级 todo 持久化、显式审阅节点、以及轻量执行交接方面往往不够强。这套仓库把 planning 当作第一公民来处理。
+内置 `plan` 仍然适合做轻量级只读分析。
 
-### 设计目标
+`plan-todo` 的目标是解决更重的 feature planning 场景：默认 planning 体验在这些场景里通常不够强，尤其是在 todo 持久化、状态管理、feature 切换、handoff 收敛这几个方面。
 
-- 保持内置 `/init` 和 `plan` 的原始语义不变
-- 通过新增更强的 planning mode，而不是打补丁修改内置行为
-- 通过聚焦 `handoff.md` 来压缩 build 上下文
-- 将 feature 规划保存为持久化工件，而不是一次性聊天状态
-- 运行时默认可用中文交互，同时仓库文档提供英中双语内容
+### 内置 `plan` 与 `plan-todo` 的区别
 
-### 仓库内容
+| 维度 | 内置 `plan` | `plan-todo` |
+| --- | --- | --- |
+| 主要用途 | 快速分析 | feature 级 planning workflow |
+| todo 持久化 | 较弱 | 明确、结构化、按 feature 隔离 |
+| plan 状态模型 | 隐式 | `prepare -> ready -> approved -> building -> ...` |
+| feature 切换 | 不是核心能力 | 通过 `/feature-switch` 内建支持 |
+| 执行交接 | 较松散 | 使用聚焦的 `handoff.md` |
+| plan 工件 | 可选 | 每个 feature 都要求具备 |
+| 审阅门槛 | 偏口头化 | handoff 前必须显式批准 |
+
+### 仓库包含什么
 
 - `agents/` - 自定义 agent 定义
 - `commands/` - 自定义斜杠命令
@@ -75,32 +102,36 @@ Built-in planning modes are often good at analysis but weak at preserving featur
 - `docs/` - 安装、使用、生命周期、升级兼容说明
 - `scripts/install.ps1` - 可选的 Windows 安装脚本
 
-### 快速开始
+### 核心思路
 
-1. 将 `agents/`、`commands/`、`templates/` 复制到你的 OpenCode 全局配置目录，或运行 `scripts/install.ps1`。
+如果你只是想做轻量调研，就继续用内置 `plan`。
+
+如果你想要完整的 planning loop，就用 `plan-todo`，它强调：
+- 同一时间只维护一个 active feature
+- feature 工件持久化到 `plan/active/<feature>/`
+- 明确的方案比较
+- build 前必须有显式确认
+- 通过 `handoff.md` 压缩执行上下文
+
+### 从这里开始读
+
+- 安装说明：`docs/installation.md`
+- 使用说明：`docs/usage.md`
+- 生命周期：`docs/feature-lifecycle.md`
+- 升级兼容：`docs/upgrade-compatibility.md`
+
+### 最短使用路径
+
+1. 把这套 workflow 安装到你的 OpenCode 配置目录。
 2. 重启 OpenCode。
 3. 切换到 `plan-todo`。
-4. 在项目中运行 `/init-plan`。
-5. 用 `/plan-feature <feature-name>` 开始规划。
-6. 在切到 build 前运行 `/plan-handoff`。
-
-### 核心工作流
-
-- 在 `plan-todo` 中做规划
-- 同一时间只维护一个 active feature
-- 将计划工件持久化到 `plan/active/<feature>/`
-- 生成简洁的 `handoff.md`
-- build 阶段以 handoff 为主上下文执行
-
-## Documentation / 文档
-
-- `docs/installation.md`
-- `docs/usage.md`
-- `docs/feature-lifecycle.md`
-- `docs/upgrade-compatibility.md`
+4. 在项目里运行 `/init-plan`。
+5. 运行 `/plan-feature <feature-name>`。
+6. 审阅并批准计划。
+7. 在切到 build 前运行 `/plan-handoff`。
 
 ## Scope note / 范围说明
 
 This repository is not a fork of OpenCode. It is a public workflow layer built on top of OpenCode's documented extension points.
 
-本仓库不是 OpenCode 的源码 fork，而是构建在 OpenCode 官方扩展点之上的公开工作流层。
+本仓库不是 OpenCode 的源码 fork，而是建立在 OpenCode 官方扩展点之上的公开工作流层。
