@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.1.1] - 2026-03-13
+
+### English
+
+Release alignment update.
+
+Added or finalized:
+- `CHANGELOG.md`
+- bilingual GitHub release notes
+- version point that includes both the install script and changelog in the tagged state
+
+### 中文
+
+版本对齐更新。
+
+新增或完成：
+- `CHANGELOG.md`
+- 英中双语 GitHub Release 正文
+- 一个同时包含安装脚本与变更日志的正式标签版本
+
 ## [v0.1.0] - 2026-03-13
 
 ### English
