@@ -50,10 +50,10 @@ Use `plan-todo` when you want a full planning loop with:
 
 ### Start here
 
-- Installation: `docs/installation.md`
-- Usage: `docs/usage.md`
-- Feature lifecycle: `docs/feature-lifecycle.md`
-- Upgrade compatibility: `docs/upgrade-compatibility.md`
+- Installation: `https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/installation.md`
+- Usage: `https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/usage.md`
+- Feature lifecycle: `https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/feature-lifecycle.md`
+- Upgrade compatibility: `https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/upgrade-compatibility.md`
 
 ### Quick path
 
@@ -115,10 +115,10 @@ Use `plan-todo` when you want a full planning loop with:
 
 ### 从这里开始读
 
-- 安装说明：`docs/installation.md`
-- 使用说明：`docs/usage.md`
-- 生命周期：`docs/feature-lifecycle.md`
-- 升级兼容：`docs/upgrade-compatibility.md`
+- 安装说明：`https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/installation.md`
+- 使用说明：`https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/usage.md`
+- 生命周期：`https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/feature-lifecycle.md`
+- 升级兼容：`https://github.com/spartawhy117/opencode-plan-todo/blob/main/docs/upgrade-compatibility.md`
 
 ### 最短使用路径
 
