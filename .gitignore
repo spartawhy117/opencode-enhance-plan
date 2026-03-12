@@ -1,0 +1,12 @@
+# Local editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python or Node artifacts if contributors add tooling
+__pycache__/
+node_modules/
+
+# Local installation scratch
+local/
