@@ -17,3 +17,9 @@ local/
 # Temp directory contents (keep dir, ignore files)
 temp/*
 !temp/.gitkeep
+
+# CodeBuddy local runtime state (keep project skills tracked)
+.codebuddy/memory/
+.codebuddy/plans/
+.codebuddy/teams/
+

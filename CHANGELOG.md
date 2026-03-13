@@ -2,7 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.5] - 2026-03-13
+
+
+### English
+
+Added:
+- Project-local maintainer skill entrypoints under `.codebuddy/skills/repo-release-workflow/` and `.opencode/skills/repo-release-workflow/`
+- Shared helper script `scripts/release-workflow.mjs` for repository commit and release flows
+- Maintainer workflow reference at `docs/repo-release-workflow.md`
+
+Changed:
+- `README.md`, `docs/installation.md`, and `docs/usage.md` now document the repository maintenance triggers `提交` and `发版`
+- `.gitignore` now ignores local CodeBuddy runtime state while keeping project-level skills trackable
+- `package.json` now exposes `repo:commit` and `repo:release` script entrypoints
+
+### 中文
+
+新增：
+- 在 `.codebuddy/skills/repo-release-workflow/` 与 `.opencode/skills/repo-release-workflow/` 下新增项目级维护 skill 入口
+- 新增共享辅助脚本 `scripts/release-workflow.mjs`，用于仓库提交与发版流程
+- 新增维护流程文档 `docs/repo-release-workflow.md`
+
+变更：
+- `README.md`、`docs/installation.md`、`docs/usage.md` 已补充仓库维护触发词 `提交` 与 `发版` 的说明
+- `.gitignore` 现在会忽略 CodeBuddy 本地运行态目录，同时保留项目级 skill 可跟踪
+- `package.json` 现在提供 `repo:commit` 与 `repo:release` 脚本入口
+
 ## [v0.2.4] - 2026-03-13
+
 
 ### English
 

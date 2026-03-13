@@ -35,9 +35,12 @@ The built-in `plan` mode is still useful for lightweight read-only analysis.
 - `commands/` - custom slash commands
 - `templates/` - project templates used by `/init-plan`
 - `src/` - TypeScript plugin source (auto-deploys agents/commands/templates)
-- `docs/` - installation, usage, and upgrade notes
-- `scripts/` - install helpers for Windows (PowerShell) and Linux/macOS (bash)
+- `docs/` - installation, usage, upgrade, and maintainer workflow notes
+- `scripts/` - shared repository maintenance helper for commit/release flows
+- `.codebuddy/skills/` - project-level CodeBuddy skill entrypoint for repository maintenance
+- `.opencode/skills/` - project-level OpenCode skill entrypoint for repository maintenance
 - `legacy/` - archived docs superseded by agent definitions
+
 
 ### Install as OpenCode Plugin (recommended)
 
@@ -66,7 +69,9 @@ Use `enhance-plan` when you want a full planning loop with:
 
 - Installation: [`docs/installation.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/installation.md)
 - Usage: [`docs/usage.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/usage.md)
+- Maintainer release workflow: [`docs/repo-release-workflow.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/repo-release-workflow.md)
 - Upgrade checklist: [`docs/upgrade-compatibility.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/upgrade-compatibility.md)
+
 
 ### Quick path
 
@@ -78,7 +83,20 @@ Use `enhance-plan` when you want a full planning loop with:
 6. Review and approve the plan.
 7. Run `/plan-handoff` before switching to build mode.
 
+### Maintainer repo skill
+
+This repository also tracks a cross-tool maintainer skill named `repo-release-workflow`.
+
+- **CodeBuddy entrypoint**: `.codebuddy/skills/repo-release-workflow/`
+- **OpenCode entrypoint**: `.opencode/skills/repo-release-workflow/`
+- **Standard triggers**: `提交` and `发版`
+- **`提交` behavior**: `git add -A` + `git commit`
+- **`发版` behavior**: version bump + `npm run build` + release commit + `git tag` + `git push` + `npm publish`
+
+Implementation details live in `docs/repo-release-workflow.md` and `scripts/release-workflow.mjs`.
+
 ## 中文
+
 
 `opencode-enhance-plan` 是一个构建在 OpenCode 之上的增强规划工作流插件。
 
@@ -144,7 +162,9 @@ OpenCode 下次启动时会自动安装并加载插件，自动将 agents、comm
 
 - 安装说明：[`docs/installation.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/installation.md)
 - 使用说明：[`docs/usage.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/usage.md)
+- 仓库维护流程：[`docs/repo-release-workflow.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/repo-release-workflow.md)
 - 升级检查清单：[`docs/upgrade-compatibility.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/upgrade-compatibility.md)
+
 
 ### 最短使用路径
 
@@ -156,7 +176,20 @@ OpenCode 下次启动时会自动安装并加载插件，自动将 agents、comm
 6. 审阅并批准计划。
 7. 在切到 build 前运行 `/plan-handoff`。
 
+### 仓库维护 skill
+
+这个仓库还额外跟踪了一套跨工具维护 skill：`repo-release-workflow`。
+
+- **CodeBuddy 入口**：`.codebuddy/skills/repo-release-workflow/`
+- **OpenCode 入口**：`.opencode/skills/repo-release-workflow/`
+- **标准触发词**：`提交` 与 `发版`
+- **`提交` 行为**：`git add -A` + `git commit`
+- **`发版` 行为**：版本号更新 + `npm run build` + release commit + `git tag` + `git push` + `npm publish`
+
+具体执行细节记录在 `docs/repo-release-workflow.md` 与 `scripts/release-workflow.mjs`。
+
 ## Scope note / 范围说明
+
 
 This repository is not a fork of OpenCode. It is a public workflow layer built on top of OpenCode's documented extension points.
 

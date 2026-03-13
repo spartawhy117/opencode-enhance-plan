@@ -37,7 +37,14 @@ After restart:
 - `/init-plan` should be available
 - `/plan-feature`, `/feature-switch`, and `/plan-handoff` should be available
 
+### Maintainer note
+
+This repository also tracks a project-local maintainer skill under `.codebuddy/skills/repo-release-workflow/` and `.opencode/skills/repo-release-workflow/`.
+
+That skill is only for maintaining this repository. It does not change how end users install the plugin.
+
 ## 中文
+
 
 ### 目标
 
@@ -74,7 +81,14 @@ After restart:
 - `/init-plan` 是否可用
 - `/plan-feature`、`/feature-switch`、`/plan-handoff` 是否可用
 
+### 维护者说明
+
+这个仓库还会在 `.codebuddy/skills/repo-release-workflow/` 和 `.opencode/skills/repo-release-workflow/` 下跟踪一套项目级维护 skill。
+
+它只用于维护当前仓库，不会改变终端用户安装插件的方式。
+
 ## Important / 注意事项
+
 
 - Do not modify the OpenCode installation directory.
 - Keep your personal provider config and API keys outside this repository.

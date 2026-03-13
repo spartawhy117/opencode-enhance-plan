@@ -1,6 +1,6 @@
 {
   "name": "opencode-enhance-plan",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "An enhanced planning workflow plugin for OpenCode — persistent plan artifacts, explicit review gates, structured todo state, and multi-feature switching",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,6 +12,8 @@
     "templates/"
   ],
   "scripts": {
+    "repo:commit": "node scripts/release-workflow.mjs commit",
+    "repo:release": "node scripts/release-workflow.mjs release",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },

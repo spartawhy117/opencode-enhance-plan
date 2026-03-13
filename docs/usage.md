@@ -46,7 +46,17 @@ Behavior:
 - keeps execution context small
 - focuses on goal, scope, todo summary, order, validation, and blockers
 
+### Maintainer repository workflow
+
+This repository also tracks a maintainer-only skill named `repo-release-workflow`.
+
+- **Trigger `提交`**: stage and commit current repository changes
+- **Trigger `发版`**: bump version, build, create a release commit, tag, push, and publish to npm
+- **Entrypoints**: `.codebuddy/skills/repo-release-workflow/` and `.opencode/skills/repo-release-workflow/`
+- **Workflow reference**: `docs/repo-release-workflow.md`
+
 ## 中文
+
 
 ### 推荐工作流
 
@@ -92,7 +102,17 @@ Behavior:
 - 尽量压缩执行上下文
 - 聚焦于目标、范围、todo 摘要、执行顺序、验证步骤与阻塞点
 
+### 仓库维护工作流
+
+这个仓库还额外跟踪了一套仅供维护者使用的 skill：`repo-release-workflow`。
+
+- **触发 `提交`**：暂存并提交当前仓库改动
+- **触发 `发版`**：更新版本号、执行构建、创建 release commit、打 tag、推送并发布到 npm
+- **入口目录**：`.codebuddy/skills/repo-release-workflow/` 与 `.opencode/skills/repo-release-workflow/`
+- **流程说明**：`docs/repo-release-workflow.md`
+
 ## Runtime language / 运行时语言
+
 
 This workflow keeps repository files in English-first form while still allowing the agent to default to Chinese in user-facing responses.
 
