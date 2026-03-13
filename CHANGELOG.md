@@ -2,7 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.7] - 2026-03-13
+
+### English
+
+Changed:
+- Removed the temporary `publish-npm-bootstrap.yml` workflow after npm Trusted Publishing was configured
+- `repo:release` now stops after build, release commit, tag creation, and push; npm publishing is handled by GitHub Actions from the pushed tag
+- Maintainer documentation and both project-local skills now describe the tag-driven release flow consistently
+
+### 中文
+
+变更：
+- 在 npm Trusted Publishing 配置完成后，移除了临时的 `publish-npm-bootstrap.yml` 工作流
+- `repo:release` 现在会在构建、release commit、打 tag、推送后停止；npm 发布改由推送的 tag 触发 GitHub Actions 完成
+- 维护文档和两份项目级 skill 已统一为 tag 驱动发版语义
+
 ## [v0.2.6] - 2026-03-13
+
 
 ### English
 

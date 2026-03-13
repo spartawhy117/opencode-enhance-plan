@@ -18,10 +18,15 @@ function fail(message) {
   process.exit(1);
 }
 
+function needsShell(command) {
+  return process.platform === 'win32' && command.toLowerCase().endsWith('.cmd');
+}
+
 function run(command, args) {
   execFileSync(command, args, {
     cwd: repoRoot,
     stdio: 'inherit',
+    shell: needsShell(command),
   });
 }
 
@@ -29,8 +34,10 @@ function capture(command, args) {
   return execFileSync(command, args, {
     cwd: repoRoot,
     encoding: 'utf8',
+    shell: needsShell(command),
   }).trim();
 }
+
 
 function ensureGitRepository() {
   const insideWorkTree = capture(gitBin, ['rev-parse', '--is-inside-work-tree']);
@@ -160,10 +167,12 @@ function runReleaseMode(args) {
   run(gitBin, ['tag', `v${version}`]);
   run(gitBin, ['push']);
   run(gitBin, ['push', '--tags']);
-  run(npmBin, ['publish']);
 
-  console.log(`[repo-release-workflow] Released ${getPackageName()}@${version}.`);
+  console.log(
+    `[repo-release-workflow] Prepared ${getPackageName()}@${version} and pushed tag v${version}. GitHub Actions will publish this release.`,
+  );
 }
+
 
 function main() {
   ensureGitRepository();

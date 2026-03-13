@@ -91,7 +91,8 @@ This repository also tracks a cross-tool maintainer skill named `repo-release-wo
 - **OpenCode entrypoint**: `.opencode/skills/repo-release-workflow/`
 - **Standard triggers**: `提交` and `发版`
 - **`提交` behavior**: `git add -A` + `git commit`
-- **`发版` behavior**: version bump + `npm run build` + release commit + `git tag` + `git push` + `npm publish`
+- **`发版` behavior**: version bump + `npm run build` + release commit + `git tag` + `git push` + GitHub Actions npm publish triggered by the pushed tag
+
 
 Implementation details live in `docs/repo-release-workflow.md` and `scripts/release-workflow.mjs`.
 
@@ -184,7 +185,8 @@ OpenCode 下次启动时会自动安装并加载插件，自动将 agents、comm
 - **OpenCode 入口**：`.opencode/skills/repo-release-workflow/`
 - **标准触发词**：`提交` 与 `发版`
 - **`提交` 行为**：`git add -A` + `git commit`
-- **`发版` 行为**：版本号更新 + `npm run build` + release commit + `git tag` + `git push` + `npm publish`
+- **`发版` 行为**：版本号更新 + `npm run build` + release commit + `git tag` + `git push` + 由推送的 tag 触发 GitHub Actions 发布到 npm
+
 
 具体执行细节记录在 `docs/repo-release-workflow.md` 与 `scripts/release-workflow.mjs`。
 
