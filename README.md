@@ -12,6 +12,27 @@ It does not replace the built-in `plan` mode. Instead, it adds a stronger planni
 - minimal build handoff
 - restricted write access for planning artifacts and project-level planning files
 
+### Current capabilities
+
+- planning-first workflow for non-trivial feature work
+- one active feature context at a time
+- persistent plan artifacts under `plan/active/<feature>/`
+- restricted writes to planning files during planning
+- explicit approval before final handoff to build mode
+- feature switching with persisted and restorable plan state
+
+### Planning write boundary
+
+`enhance-plan` may create or update planning files only:
+
+- `AGENTS.md`
+- `.opencode/README.md`
+- `plan/templates/*`
+- `plan/active/<feature>/*`
+- `plan/archive/<feature>/*`
+
+`enhance-plan` must not modify implementation files such as application source, dependency manifests, CI config, build config, or release scripts.
+
 ### Why not just use the built-in `plan` mode?
 
 The built-in `plan` mode is still useful for lightweight read-only analysis.
@@ -69,6 +90,28 @@ Use `enhance-plan` when you want a full planning loop with:
 - a small execution context through `handoff.md`
 - project-local planning files that can be updated during planning without editing implementation code
 
+### What it writes in a project
+
+After installation, the planning workflow can create and maintain:
+
+- project `AGENTS.md`
+- project `.opencode/README.md`
+- `plan/templates/plan.json`
+- `plan/templates/plan.md`
+- `plan/templates/.plan-original.md`
+- `plan/templates/handoff.md`
+- `plan/active/<feature>/plan.json`
+- `plan/active/<feature>/plan.md`
+- `plan/active/<feature>/.plan-original.md`
+- `plan/active/<feature>/handoff.md`
+
+### What it does not do
+
+- it does not replace build mode
+- it does not implement application code while planning
+- it does not run build, install, release, deploy, or migration steps from `enhance-plan`
+- it does not change files outside the planning boundary listed above
+
 ### Start here
 
 - Installation: [`docs/installation.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/installation.md)
@@ -112,6 +155,27 @@ Implementation details live in `docs/repo-release-workflow.md` and `scripts/rele
 - 需要结构化 todo 状态
 - 需要 feature 切换与恢复
 - 需要最小化 build handoff
+
+### 当前能力
+
+- 面向非简单 feature 的 planning-first 工作流
+- 同一时间只维护一个 active feature context
+- 规划工件持久化到 `plan/active/<feature>/`
+- 在规划阶段允许对 planning 文件做受限写入
+- build 前必须显式批准
+- feature 切换时可以恢复已持久化的 plan state
+
+### Planning 写入边界
+
+`enhance-plan` 只允许创建或更新以下 planning 文件：
+
+- `AGENTS.md`
+- `.opencode/README.md`
+- `plan/templates/*`
+- `plan/active/<feature>/*`
+- `plan/archive/<feature>/*`
+
+`enhance-plan` 不得修改应用源码、依赖清单、CI 配置、构建配置或发版脚本等实现相关文件。
 
 ### 为什么不直接用内置 `plan`？
 
@@ -166,6 +230,28 @@ OpenCode 下次启动时会自动安装并加载插件，自动将 agents、comm
 - build 前必须有显式确认
 - 通过 `handoff.md` 压缩执行上下文
 - 在规划阶段可受限写入项目级 planning 文件，但不修改实现代码
+
+### 在项目里会写入什么
+
+安装后，这套 workflow 可以在项目中创建并维护：
+
+- 项目 `AGENTS.md`
+- 项目 `.opencode/README.md`
+- `plan/templates/plan.json`
+- `plan/templates/plan.md`
+- `plan/templates/.plan-original.md`
+- `plan/templates/handoff.md`
+- `plan/active/<feature>/plan.json`
+- `plan/active/<feature>/plan.md`
+- `plan/active/<feature>/.plan-original.md`
+- `plan/active/<feature>/handoff.md`
+
+### 它不会做什么
+
+- 不会替代 build mode
+- 不会在 planning 阶段实现业务代码
+- 不会在 `enhance-plan` 中执行 build、install、release、deploy、migration
+- 不会修改写入边界之外的文件
 
 ### 从这里开始读
 
