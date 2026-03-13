@@ -2,7 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.0] - 2026-03-13
+
+### English
+
+Changed:
+- Promoted `opencode-enhance-plan` from the 0.2.x iteration line to the first stable `1.0.0` release
+- Finalized the tag-driven npm publishing and GitHub Release update flow as the default release path
+- Stabilized the shared repository maintenance workflow for CodeBuddy and OpenCode with synced local skills, scripts, and docs
+
+### 中文
+
+变更：
+- 将 `opencode-enhance-plan` 从 0.2.x 迭代阶段提升为首个稳定正式版 `1.0.0`
+- 将基于 tag 的 npm 发布与 GitHub Release 自动更新流程固化为默认发版路径
+- 将 CodeBuddy 与 OpenCode 共用的仓库维护流程稳定下来，统一了本地 skill、脚本与文档
+
 ## [v0.2.7] - 2026-03-13
+
 
 ### English
 
