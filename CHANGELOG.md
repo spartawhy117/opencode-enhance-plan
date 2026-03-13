@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.2] - 2026-03-13
+
+### English
+
+Fixed CI installation failure caused by unused `zod` dependency.
+
+Fixed:
+- Removed `zod` from `devDependencies` — it was never used in the codebase but caused `bun install --no-cache` to fail with `ENOENT` in OpenCode's CI pipeline
+
+### 中文
+
+修复了未使用的 `zod` 依赖导致 CI 安装失败的问题。
+
+修复：
+- 从 `devDependencies` 移除 `zod` — 代码中从未使用，但它在 OpenCode CI 流水线的 `bun install --no-cache` 中触发了 `ENOENT` 错误
+
 ## [v0.2.1] - 2026-03-13
 
 ### English

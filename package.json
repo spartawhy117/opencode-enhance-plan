@@ -1,6 +1,6 @@
 {
   "name": "opencode-enhance-plan",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An enhanced planning workflow plugin for OpenCode — persistent plan artifacts, explicit review gates, structured todo state, and multi-feature switching",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,8 +39,7 @@
   "devDependencies": {
     "@opencode-ai/plugin": "^1.2.25",
     "@types/node": "^25.5.0",
-    "typescript": "^5.7.0",
-    "zod": "^3.24.0"
+    "typescript": "^5.7.0"
   },
   "peerDependencies": {
     "@opencode-ai/plugin": ">=1.0.0"
