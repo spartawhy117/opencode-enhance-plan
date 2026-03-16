@@ -19,8 +19,16 @@ Required handoff sections:
 - confirmed scope
 - current todo summary
 - execution order
+- execution batching
 - validation steps
 - blockers, caveats, or notable constraints
+
+Execution batching rules:
+- Group todos into small batches (2-4 items each) based on logical dependency and scope
+- Each batch must end with a commit checkpoint that reminds the user to commit and push changes
+- Commit checkpoints must explicitly remind the user to include the `plan/` directory in the commit, since uncommitted planning artifacts remain in the working tree and may be injected into context by OpenCode
+- After a commit checkpoint, recommend starting a new conversation to reduce accumulated context tokens
+- If a feature has 3 or fewer todos, a single batch is acceptable
 
 The handoff should minimize token usage for build mode and should avoid repeating background that is not necessary for execution.
 Do not copy the entire planning history into `handoff.md`; keep it as the smallest useful execution context.

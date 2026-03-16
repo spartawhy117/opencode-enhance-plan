@@ -49,6 +49,21 @@ Guardrails:
 - only migrate planning or progress docs; do not reorganize product or business documentation
 - if legacy planning docs exist, preserve a traceable source location while normalizing them into the `plan/` structure
 
+Compaction configuration:
+- After creating the planning structure, check whether the project's `opencode.json` (or `opencode.jsonc`) includes a `compaction` section
+- If the compaction section is missing, recommend the user add the following configuration to enable automatic context compression:
+  ```json
+  {
+    "compaction": {
+      "auto": true,
+      "prune": true,
+      "reserved": 10000
+    }
+  }
+  ```
+- Do not write to `opencode.json` directly; only surface the recommendation to the user so they can decide whether to apply it
+- Explain briefly that `auto` triggers compression when context is nearly full, `prune` removes old tool outputs to save tokens, and `reserved` keeps a buffer for the compression process
+
 Important:
 - stay in planning behavior until the user explicitly asks to switch to build
 - if the project already has planning docs, prefer migration and normalization over duplication

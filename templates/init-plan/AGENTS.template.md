@@ -25,6 +25,16 @@ Completed or inactive feature plans should move to `plan/archive/<feature>/` whe
 - Read `plan.json` or `plan.md` only when additional detail is needed.
 - Avoid loading broad background context when the current feature handoff is sufficient.
 
+## Build Context Hygiene
+
+Long conversations accumulate token overhead from tool outputs and modified file contents injected into context. To keep build sessions efficient:
+
+- Execute todos in small batches as defined in the `Execution Batching` section of `handoff.md`.
+- After completing a batch, prompt the user to commit and push changes before continuing.
+- Commit checkpoints must include the `plan/` directory. Planning artifacts (`plan.json`, `plan.md`, etc.) are part of the working tree and will be injected into context by OpenCode if left uncommitted. Committing them reduces noise in subsequent conversations.
+- After a commit checkpoint, recommend starting a new conversation to reset context, referencing `handoff.md` for the next batch.
+- Do not attempt to implement all todos in a single conversation when the feature involves many files or complex changes.
+
 ## Planning Write Policy
 
 - `enhance-plan` may create or update `AGENTS.md`, `.opencode/README.md`, and files under `plan/` while staying in planning mode.

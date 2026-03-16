@@ -183,6 +183,20 @@ Exit this loop only when the user explicitly confirms the plan is ready for exec
 
 ---
 
+## Execution Batching Awareness
+
+When preparing handoff artifacts, consider context token hygiene for the build phase:
+
+- Group todos into small batches (2-4 items each) based on logical dependency and scope.
+- Each batch should end with a commit checkpoint — a clear prompt for the user to commit and push changes to the remote repository.
+- After a commit checkpoint, recommend the user to start a new conversation so accumulated context (tool outputs, modified file contents) is reset.
+- Reflect this batching in the `Execution Batching` section of `handoff.md`.
+- If a feature has 3 or fewer todos, a single batch with one commit checkpoint is acceptable.
+
+This prevents build-mode conversations from accumulating excessive tokens due to injected file contents and tool outputs over long sessions.
+
+---
+
 ## Important
 
 The user does not want implementation yet.

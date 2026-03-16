@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.0.0] - 2026-03-16
+
+### English
+
+Added:
+- New documentation `docs/context-optimization.md` — comprehensive bilingual guide covering all built-in context optimization strategies
+
+Changed:
+- `agents/enhance-plan.md` — agent now enforces execution batching and commit checkpoint guidance during planning
+- `commands/init-plan.md` — `/init-plan` now checks for OpenCode compaction configuration and recommends enabling it if missing
+- `commands/plan-handoff.md` — `/plan-handoff` now generates batch groups and includes checkpoint instructions in the handoff
+- `templates/init-plan/AGENTS.template.md` — added context optimization rules to the deployed agent definition
+- `templates/init-plan/handoff.template.md` — handoff template now includes batch execution and checkpoint sections
+- `templates/init-plan/plan-json.template.json` — added `batchGroups` field for reviewable batch assignments during planning
+- `README.md` — added "Context optimization" section (English & Chinese) and linked to the new doc
+- `docs/usage.md` — added full "Context optimization" usage guide (English & Chinese) with examples
+
+### 中文
+
+新增：
+- 新增文档 `docs/context-optimization.md` — 全面的中英双语上下文优化策略指南
+
+变更：
+- `agents/enhance-plan.md` — agent 现在在规划阶段就强制执行分批和提交检查点指导
+- `commands/init-plan.md` — `/init-plan` 现在会检查 OpenCode 的 compaction 配置，缺失时推荐开启
+- `commands/plan-handoff.md` — `/plan-handoff` 现在会生成批次分组并在 handoff 中包含检查点说明
+- `templates/init-plan/AGENTS.template.md` — 部署的 agent 定义中新增上下文优化规则
+- `templates/init-plan/handoff.template.md` — handoff 模板新增分批执行和检查点段落
+- `templates/init-plan/plan-json.template.json` — 新增 `batchGroups` 字段，在规划阶段就可审阅批次分配
+- `README.md` — 新增"上下文优化"段落（英中双语）并链接到新文档
+- `docs/usage.md` — 新增完整的"上下文优化"使用说明（英中双语），含示例代码
+
 ## [v1.0.0] - 2026-03-13
 
 ### English

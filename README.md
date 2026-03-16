@@ -15,6 +15,18 @@ The plugin is installed globally through OpenCode, but it writes planning artifa
 - allows restricted writes to planning files during planning
 - requires explicit approval before final handoff
 - restores plan state when switching features
+- optimizes context token usage through execution batching, commit checkpoints, and compaction recommendations
+
+### Context optimization
+
+Long build sessions accumulate token overhead from tool outputs and modified file contents. The plugin mitigates this with built-in strategies:
+
+- **Execution batching** — todos are grouped into small batches (2–4 items); each batch runs in its own conversation
+- **Commit checkpoints** — after each batch, the user is prompted to commit and push all changes (including `plan/`), then start a fresh conversation
+- **Batch groups in `plan.json`** — batch assignments are captured during planning, making them reviewable before execution
+- **Compaction recommendation** — `/init-plan` checks for OpenCode's compaction config and recommends enabling it if missing
+
+See [`docs/context-optimization.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/context-optimization.md) for the full explanation.
 
 ### Planning boundary
 
@@ -56,6 +68,7 @@ Restart OpenCode. The plugin deploys its agents, commands, and templates to `~/.
 
 - Installation: [`docs/installation.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/installation.md)
 - Usage: [`docs/usage.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/usage.md)
+- Context optimization: [`docs/context-optimization.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/context-optimization.md)
 - Upgrade guide: [`docs/upgrade-compatibility.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/upgrade-compatibility.md)
 - Maintainer release workflow: [`docs/repo-release-workflow.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/repo-release-workflow.md)
 
@@ -74,6 +87,18 @@ Restart OpenCode. The plugin deploys its agents, commands, and templates to `~/.
 - 在规划阶段允许对 planning 文件做受限写入
 - 最终 handoff 前必须显式批准
 - 切换 feature 时可以恢复 plan state
+- 通过执行分批、提交检查点和压缩配置推荐来优化上下文 token 占用
+
+### 上下文优化
+
+长时间的 build 会话会因工具输出和修改文件的注入导致 token 堆积。插件通过以下内置策略缓解：
+
+- **执行分批** — 将 todo 分成小批次（每批 2–4 项），每个批次在独立对话中执行
+- **提交检查点** — 每批完成后提示用户提交并推送所有改动（包括 `plan/`），然后开新对话
+- **plan.json 批次分组** — 在规划阶段就记录批次分配，执行前可审阅调整
+- **压缩配置推荐** — `/init-plan` 检查 OpenCode 的 compaction 配置，若缺失则推荐开启
+
+详见 [`docs/context-optimization.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/context-optimization.md)。
 
 ### Planning 边界
 
@@ -115,6 +140,7 @@ Restart OpenCode. The plugin deploys its agents, commands, and templates to `~/.
 
 - 安装说明：[`docs/installation.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/installation.md)
 - 使用说明：[`docs/usage.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/usage.md)
+- 上下文优化：[`docs/context-optimization.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/context-optimization.md)
 - 升级指南：[`docs/upgrade-compatibility.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/upgrade-compatibility.md)
 - 仓库维护流程：[`docs/repo-release-workflow.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/repo-release-workflow.md)
 

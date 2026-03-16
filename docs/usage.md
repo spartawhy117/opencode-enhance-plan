@@ -65,6 +65,55 @@ Behavior:
 - focuses on goal, scope, todo summary, order, validation, and blockers
 - writes the handoff to `plan/active/<feature>/handoff.md`
 
+### Context optimization
+
+OpenCode injects modified file contents and tool outputs into context automatically. Long build sessions that touch many files can quickly exhaust the context window. The plugin includes several built-in strategies to manage this:
+
+#### Execution batching
+
+When preparing a handoff, the planning agent groups todos into small batches (2–4 items each). Each batch ends with a commit checkpoint. The build agent executes one batch per conversation, then prompts:
+
+> Commit and push your changes (including the `plan/` directory), then start a new conversation for the next batch.
+
+This keeps each conversation's context small and predictable.
+
+#### Commit checkpoints include `plan/`
+
+Planning artifacts (`plan.json`, `plan.md`, etc.) under `plan/` are part of the working tree. If left uncommitted, OpenCode treats them as modified files and injects their contents into context. Always commit `plan/` along with your implementation changes at each checkpoint.
+
+#### Batch groups in `plan.json`
+
+The `batchGroups` field in `plan.json` stores batch assignments during planning:
+
+```json
+{
+  "batchGroups": [
+    { "batch": 1, "todoIds": ["todo-1", "todo-2"], "commitCheckpoint": true },
+    { "batch": 2, "todoIds": ["todo-3", "todo-4"], "commitCheckpoint": true }
+  ]
+}
+```
+
+This makes batching a reviewable part of the plan before execution begins.
+
+#### Compaction configuration
+
+`/init-plan` checks whether `opencode.json` includes a `compaction` section. If missing, it recommends:
+
+```json
+{
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  }
+}
+```
+
+This enables OpenCode's built-in context compression as a safety net for conversations that still grow long despite batching.
+
+For the full technical explanation, see [`docs/context-optimization.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/context-optimization.md).
+
 ### Planning write boundary
 
 `enhance-plan` is no longer read-only. It may write planning artifacts and init-plan project files only:
@@ -152,6 +201,55 @@ This repository also tracks a maintainer-only skill named `repo-release-workflow
 - 尽量压缩执行上下文
 - 聚焦于目标、范围、todo 摘要、执行顺序、验证步骤与阻塞点
 - 输出路径为 `plan/active/<feature>/handoff.md`
+
+### 上下文优化
+
+OpenCode 会自动将修改过的文件内容和工具输出注入上下文。长时间的 build 会话如果涉及大量文件，可能很快耗尽上下文窗口。插件内置了以下策略来管理这个问题：
+
+#### 执行分批
+
+生成 handoff 时，规划 agent 会将 todo 分成小批次（每批 2–4 项）。每个批次以提交检查点结尾。Build agent 每次对话只执行一个批次，然后提示：
+
+> 提交并推送你的改动（包括 `plan/` 目录），然后开新对话继续下一批次。
+
+这使得每次对话的上下文保持精简可控。
+
+#### 提交检查点包含 `plan/`
+
+`plan/` 下的规划文件（`plan.json`、`plan.md` 等）属于工作区。如果不提交，OpenCode 会将它们当作已修改文件注入上下文。在每个检查点，务必将 `plan/` 与实现代码一起提交。
+
+#### plan.json 中的批次分组
+
+`plan.json` 的 `batchGroups` 字段在规划阶段就存储了批次分配：
+
+```json
+{
+  "batchGroups": [
+    { "batch": 1, "todoIds": ["todo-1", "todo-2"], "commitCheckpoint": true },
+    { "batch": 2, "todoIds": ["todo-3", "todo-4"], "commitCheckpoint": true }
+  ]
+}
+```
+
+这使分批成为计划的可审阅部分，在执行前就可以调整。
+
+#### 压缩配置推荐
+
+`/init-plan` 会检查 `opencode.json` 是否包含 `compaction` 段。如果缺失，会推荐：
+
+```json
+{
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  }
+}
+```
+
+这启用了 OpenCode 的内置上下文压缩，作为分批策略之外的安全网。
+
+完整技术说明详见 [`docs/context-optimization.md`](https://github.com/spartawhy117/opencode-enhance-plan/blob/main/docs/context-optimization.md)。
 
 ### Planning 写入边界
 

@@ -48,5 +48,12 @@
   ],
   "openQuestions": [],
   "optionPaths": [],
+  "batchGroups": [
+    {
+      "batch": 1,
+      "todoIds": [],
+      "commitCheckpoint": true
+    }
+  ],
   "updatedAt": ""
 }
