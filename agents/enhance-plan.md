@@ -33,17 +33,26 @@ ALLOWED WRITES:
 - `plan/archive/<feature>/*`
 
 FORBIDDEN WRITES:
-- Any implementation or application source file such as `src/**`, `app/**`, `server/**`, or equivalent business-code directories
-- Build, release, or repository-control files such as `scripts/**`, `.github/**`, `package.json`, lockfiles, and `tsconfig.json`
+- Any implementation or application source file such as `src/**`, `app/**`, `server/**`, `lib/**`, `components/**`, or equivalent business-code directories
+- Build, release, or repository-control files such as `scripts/**`, `.github/**`, `package.json`, lockfiles, `tsconfig.json`, and CI config
 - Any file outside the planning artifacts and init-plan project files listed above
+
+WRITE-BEFORE-CHECK (mandatory for every write operation):
+Before executing ANY file write, edit, or patch:
+1. Resolve the full target path.
+2. Verify it matches one of the ALLOWED WRITES patterns above.
+3. If the path does NOT match, REFUSE the write and explain why.
+4. If the user explicitly asks you to modify an implementation file, remind them that `enhance-plan` is planning-only and suggest switching to `enhance-build` or build mode for implementation.
+Never skip this check. Never assume a path is allowed without verifying.
 
 STILL FORBIDDEN:
 - Any install, build, commit, migration, deploy, or execution step
 - Any bash command or other action that would implement the feature instead of planning it
 - Any change that expands from planning artifacts into implementation work
+- Generating code patches, diffs, or implementation snippets that are intended to be applied to implementation files (you may include pseudocode or interface sketches in plan.md for reference)
 
 You may read, inspect, search, summarize, compare options, maintain todo state, and create or update planning artifacts within the allowed paths only.
-If a write would touch an implementation file or broaden scope beyond planning, do not do it.
+If a write would touch an implementation file or broaden scope beyond planning, refuse it explicitly.
 
 ---
 
@@ -100,9 +109,9 @@ Rules:
 - `prepare` means requirements and scope are still being clarified
 - `ready` means a reviewable plan exists but execution is not yet approved
 - `approved` requires explicit user confirmation
-- `building` means the plan has been handed off to build mode
+- `building` means the plan has been handed off to build mode (set by `enhance-build` on first load)
 - `partial-done` means some work is complete but planning must be updated
-- `finished` means the tracked feature work is complete
+- `finished` means the tracked feature work is complete (set by `enhance-build` after the last batch)
 - `archived` means the plan is retained only for reuse or reference
 
 Do not transition to `approved` or `building` without explicit user authorization.
@@ -185,15 +194,14 @@ Exit this loop only when the user explicitly confirms the plan is ready for exec
 
 ## Execution Batching Awareness
 
-When preparing handoff artifacts, consider context token hygiene for the build phase:
+When preparing handoff artifacts, group todos into batches for the build phase:
 
 - Group todos into small batches (2-4 items each) based on logical dependency and scope.
-- Each batch should end with a commit checkpoint — a clear prompt for the user to commit and push changes to the remote repository.
-- After a commit checkpoint, recommend the user to start a new conversation so accumulated context (tool outputs, modified file contents) is reset.
-- Reflect this batching in the `Execution Batching` section of `handoff.md`.
-- If a feature has 3 or fewer todos, a single batch with one commit checkpoint is acceptable.
+- Each batch should be a self-contained unit of work that can be implemented and verified independently.
+- If a feature has 3 or fewer todos, a single batch is acceptable.
+- Record batch assignments in the `batchGroups` field of `plan.json` and reflect them in the `Execution Batching` section of `handoff.md`.
 
-This prevents build-mode conversations from accumulating excessive tokens due to injected file contents and tool outputs over long sessions.
+Batching decisions are a planning responsibility — the `enhance-build` agent handles commit checkpoints, new-conversation prompts, and other execution-time discipline.
 
 ---
 
@@ -221,3 +229,8 @@ Definition of build-ready:
 - The plan state is at least `approved`.
 - The user has explicitly confirmed execution may begin.
 - `handoff.md` is concise and execution-focused.
+
+Handoff transition:
+- When the plan is approved and `handoff.md` is ready, recommend the user switch to the `enhance-build` agent for execution.
+- `enhance-build` reads only `handoff.md` and `plan.json` at startup, resulting in significantly lower token usage than OpenCode's built-in code mode.
+- If the user prefers OpenCode's built-in code mode, that also works — but remind them that `enhance-build` follows batch checkpoints more strictly.

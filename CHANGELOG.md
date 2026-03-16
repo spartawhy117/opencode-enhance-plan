@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.0.0] - 2026-03-16
+
+### English
+
+Added:
+- New `agents/enhance-build.md` — dedicated build agent that reads only `handoff.md` + `plan.json` at startup, executes one batch per conversation, and enforces commit checkpoints with `plan/` directory reminders and new-conversation prompts
+
+Changed:
+- **Plan/Build responsibility boundary refactored** — execution-time discipline (commit checkpoints, new-conversation prompts, `plan/` inclusion) moved from `enhance-plan` to `enhance-build`
+- `agents/enhance-plan.md` — "Execution Batching Awareness" rewritten to focus solely on grouping decisions; execution discipline explicitly delegated to `enhance-build`
+- `commands/plan-handoff.md` — batching rules simplified; no longer prescribes build-phase commit behavior, only marks `Commit checkpoint: yes`
+- `templates/init-plan/AGENTS.template.md` — "Build Context Policy" now recommends `enhance-build` as the default execution agent with token-efficiency rationale
+- `templates/init-plan/handoff.template.md` — added "How to Execute" section recommending `enhance-build` over built-in code mode
+- `docs/context-optimization.md` — English/Chinese "Where" fields now include `enhance-build`; "How it works" clarifies plan vs build responsibilities; Chinese flowchart aligned with English version
+- `docs/usage.md` — English/Chinese context optimization strategy lists now specify `enhance-plan` for grouping and `enhance-build` for execution discipline
+- `README.md` — rewritten for conciseness; introduces both `enhance-plan` and `enhance-build` with clear role descriptions; commands presented as table; documentation links simplified
+
+### 中文
+
+新增：
+- 新增 `agents/enhance-build.md` — 专用执行 agent，启动时只读 `handoff.md` + `plan.json`，每次对话执行一个批次，强制提交检查点含 `plan/` 目录提醒和新对话提示
+
+变更：
+- **Plan/Build 职责边界重构** — 执行纪律（提交检查点、开新对话提示、包含 `plan/`）从 `enhance-plan` 迁移到 `enhance-build`
+- `agents/enhance-plan.md` — 重写 "Execution Batching Awareness"，聚焦分组决策；执行纪律明确委托给 `enhance-build`
+- `commands/plan-handoff.md` — 简化分批规则；不再约束 build 阶段的提交行为，只标注 `Commit checkpoint: yes`
+- `templates/init-plan/AGENTS.template.md` — "Build Context Policy" 现在推荐 `enhance-build` 作为默认执行 agent 并解释 token 效率优势
+- `templates/init-plan/handoff.template.md` — 新增 "How to Execute" 段，推荐使用 `enhance-build` 而非内建 code 模式
+- `docs/context-optimization.md` — 英中文 "Where" 列补充 `enhance-build`；"How it works" 明确 plan/build 各自职责；中文流程图与英文版对齐
+- `docs/usage.md` — 英中文上下文优化策略列表明确 `enhance-plan` 负责分组、`enhance-build` 负责执行纪律
+- `README.md` — 重写，更简洁；同时介绍 `enhance-plan` 和 `enhance-build` 并明确各自角色；命令改为表格展示；文档链接精简
+
 ## [v2.0.0] - 2026-03-16
 
 ### English

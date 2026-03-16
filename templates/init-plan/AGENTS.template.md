@@ -21,7 +21,11 @@ Completed or inactive feature plans should move to `plan/archive/<feature>/` whe
 
 ## Build Context Policy
 
-- Prefer the current feature's `handoff.md` as the primary execution context.
+- After a plan is approved, switch to the `enhance-build` agent for execution.
+- `enhance-build` reads ONLY `handoff.md` and `plan.json` at startup — no broad codebase exploration.
+- It executes one batch per conversation and prompts for commit checkpoints between batches.
+- This results in significantly lower token usage compared to OpenCode's built-in code mode.
+- If using the built-in code mode instead, prefer the current feature's `handoff.md` as the primary execution context.
 - Read `plan.json` or `plan.md` only when additional detail is needed.
 - Avoid loading broad background context when the current feature handoff is sufficient.
 

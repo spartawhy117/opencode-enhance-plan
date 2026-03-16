@@ -36,6 +36,12 @@ Group todos into small batches to keep each build conversation focused and avoid
 
 > After completing each batch, commit and push your changes — **including the `plan/` directory** — then start a new conversation for the next batch. Uncommitted plan files (`plan.json`, `plan.md`, etc.) remain in the working tree and may be injected into context by OpenCode, adding unnecessary token overhead. Committing them keeps subsequent sessions clean and focused.
 
+## How to Execute
+
+Switch to the `enhance-build` agent and start a new conversation. `enhance-build` will read this handoff and execute one batch at a time with minimal context overhead.
+
+Alternatively, you may use OpenCode's built-in code mode, but `enhance-build` loads fewer files at startup and follows batch checkpoints more strictly, resulting in lower token usage.
+
 ## Blockers And Caveats
 
 - 

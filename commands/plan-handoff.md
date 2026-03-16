@@ -20,15 +20,21 @@ Required handoff sections:
 - current todo summary
 - execution order
 - execution batching
+- how to execute (must recommend `enhance-build` agent)
 - validation steps
 - blockers, caveats, or notable constraints
 
 Execution batching rules:
 - Group todos into small batches (2-4 items each) based on logical dependency and scope
-- Each batch must end with a commit checkpoint that reminds the user to commit and push changes
-- Commit checkpoints must explicitly remind the user to include the `plan/` directory in the commit, since uncommitted planning artifacts remain in the working tree and may be injected into context by OpenCode
-- After a commit checkpoint, recommend starting a new conversation to reduce accumulated context tokens
+- Each batch should be a self-contained unit of work that the build agent can implement independently
+- Mark each batch with `Commit checkpoint: yes` so the build agent knows to prompt for commit and new conversation
 - If a feature has 3 or fewer todos, a single batch is acceptable
+- Batching decisions should align with the `batchGroups` field in `plan.json` if populated
 
 The handoff should minimize token usage for build mode and should avoid repeating background that is not necessary for execution.
 Do not copy the entire planning history into `handoff.md`; keep it as the smallest useful execution context.
+
+Transition guidance:
+- The handoff must include a `How to Execute` section that recommends switching to the `enhance-build` agent.
+- Explain that `enhance-build` reads only `handoff.md` and `plan.json` at startup, avoiding the broad file exploration that OpenCode's built-in code mode performs.
+- Mention that the built-in code mode is also supported, but `enhance-build` offers stricter batch discipline and lower token usage.
